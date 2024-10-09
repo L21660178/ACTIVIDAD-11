@@ -1,0 +1,155 @@
+<!-- ACTIVIDAD 11 
+
+Objetivo: manipular imagenes y crear ventanas modales en javascrip
+Descripcion: implementar una galeria de imagenes donde al hacer clic en una imagen, se muestre ampliaada en un modal 
+
+ALUMNA: AMERICA JAZMIN ESTRADA HERNANDEZ 
+ -->
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes con Modal</title>
+
+    <!-- Importar la fuente Anton desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+    <style>
+        /* Fondo degradado con tonos oscuros */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #2c3e50, #bdc3c7);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilos del título con nueva fuente Anton */
+        h1 {
+            color: #145ea8; /* Color oscuro */
+            font-weight: bold; /* Negritas */
+            text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.7); /* Luz blanca suave alrededor del texto */
+            margin-top: 20px;
+            font-size: 3rem; /* Tamaño más grande */
+            font-family: 'Anton', sans-serif; /* Usar la nueva fuente Anton */
+            text-transform: uppercase; /* Transformar el texto a mayúsculas para un aspecto más fuerte */
+        }
+
+        /* Estilos de la galería */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px; /* Espaciado entre las imágenes */
+        }
+
+        .gallery img {
+            width: 200px; /* Tamaño pequeño de las imágenes */
+            height: auto;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s; /* Transición suave para el efecto */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.733), 0px 0px 10px #3498db; /* Efecto de luz azulada */
+            border: 3px solid #3498db; /* Contorno azul */
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1); /* Efecto de ampliación al pasar el mouse */
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.808), 0px 0px 20px #3498db; /* Luz azul más intensa */
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+            border: 5px solid #3498db; /* Contorno azul en la imagen modal */
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4), 0px 0px 30px #3498db; /* Luz azul alrededor de la imagen modal */
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Galería</h1> 
+
+    <!-- Galería de imágenes -->
+    <div class="gallery">
+        <img src="imagen1.jpg" alt="Imagen 1">
+        <img src="imagen2.jpg" alt="Imagen 2">
+        <img src="imagen3.jpg" alt="Imagen 3">
+        <img src="imagen4.jpg" alt="Imagen 4">
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script>
+        // Obtener el modal y la imagen de contenido del modal
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("modalImg");
+
+        // Obtener todas las imágenes de la galería
+        var images = document.querySelectorAll(".gallery img");
+
+        // Asignar evento a cada imagen para abrir el modal
+        images.forEach(function(image) {
+            image.addEventListener("click", function() {
+                modal.style.display = "flex"; // Mostrar modal
+                modalImg.src = this.src; // Colocar la imagen seleccionada en el modal
+            });
+        });
+
+        // Cerrar el modal cuando se haga clic en el botón de cerrar (X)
+        var close = document.querySelector(".close");
+        close.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+
+        // También cerrar el modal si se hace clic fuera de la imagen
+        modal.addEventListener("click", function(event) {
+            if (event.target !== modalImg) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Cerrar el modal cuando se presiona la tecla "Esc"
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") { // Detecta la tecla "Esc"
+                modal.style.display = "none"; // Cierra el modal
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+ 
